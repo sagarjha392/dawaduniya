@@ -1,4 +1,3 @@
-// src/components/EditProduct.js
 import React, { useState } from "react";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
@@ -16,13 +15,29 @@ const EditProduct = ({ product }) => {
     setBrandName(e.target.value);
   };
 
-  // Handle other form input changes (productName, productDescription, etc.)
+  const handleProductNameChange = (e) => {
+    setProductName(e.target.value);
+  };
+
+  const handleProductDescriptionChange = (e) => {
+    setProductDescription(e.target.value);
+  };
+
+  const handleProductPriceChange = (e) => {
+    setProductPrice(e.target.value);
+  };
+
+  const handleProductQuantityChange = (e) => {
+    setProductQuantity(e.target.value);
+  };
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
 
-  const handleEditProduct = async () => {
+  const handleEditProduct = async (e) => {
+    e.preventDefault();
+
     if (
       brandName &&
       productName &&
@@ -60,28 +75,69 @@ const EditProduct = ({ product }) => {
         <h1 className="form-heading">Edit Product</h1>
         <hr />
         <form onSubmit={handleEditProduct}>
-        <div>
-          <label htmlFor="categoryName">Category Name:</label>
-          <input
-            type="text"
-            id="categoryName"
-            value={categoryName}
-            onChange={handleCategoryNameChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="categoryType">Category Type:</label>
-          <select
-            id="categoryType"
-            value={categoryType}
-            onChange={handleCategoryTypeChange}
-          >
-            <option className='options' value="product">Product</option>
-            <option className='options' value="service">Service</option>
-          </select>
-        </div>
-        <div><button className='btn' type="submit">Save Changes</button></div>
-      </form>
+          <div>
+            <label htmlFor="brandName">Brand Name:</label>
+            <input
+              type="text"
+              id="brandName"
+              value={brandName}
+              onChange={handleBrandNameChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="productName">Product Name:</label>
+            <input
+              type="text"
+              id="productName"
+              value={productName}
+              onChange={handleProductNameChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="productDescription">Product Description:</label>
+            <textarea
+              rows={5}
+              id="productDescription"
+              value={productDescription}
+              onChange={handleProductDescriptionChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="productQuantity">Product Quantity:</label>
+            <input
+              type="number"
+              id="productQuantity"
+              value={productQuantity}
+              onChange={handleProductQuantityChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="productPrice">Product Price:</label>
+            <input
+              type="number"
+              id="productPrice"
+              value={productPrice}
+              onChange={handleProductPriceChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="category">Select Category:</label>
+            <select
+              id="category"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+            >
+              <option value="">Select a category</option>
+              {/* Replace with the list of available categories */}
+              <option value="category1">Category 1</option>
+              <option value="category2">Category 2</option>
+              {/* Add more categories as needed */}
+            </select>
+          </div>
+          <div>
+            <button type="submit">Save Changes</button>
+          </div>
+        </form>
       </div>
     </main>
   );
