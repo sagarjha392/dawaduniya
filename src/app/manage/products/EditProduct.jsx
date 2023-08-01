@@ -60,8 +60,28 @@ const EditProduct = ({ product }) => {
         <h1 className="form-heading">Edit Product</h1>
         <hr />
         <form onSubmit={handleEditProduct}>
-          {/* Form inputs and submit button */}
-        </form>
+        <div>
+          <label htmlFor="categoryName">Category Name:</label>
+          <input
+            type="text"
+            id="categoryName"
+            value={categoryName}
+            onChange={handleCategoryNameChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="categoryType">Category Type:</label>
+          <select
+            id="categoryType"
+            value={categoryType}
+            onChange={handleCategoryTypeChange}
+          >
+            <option className='options' value="product">Product</option>
+            <option className='options' value="service">Service</option>
+          </select>
+        </div>
+        <div><button className='btn' type="submit">Save Changes</button></div>
+      </form>
       </div>
     </main>
   );
