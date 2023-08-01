@@ -26,7 +26,7 @@ const DeleteProduct = ({ product }) => {
     window.location.reload();
   };
   return (
-    <main>
+    <>
       <div className="form-container">
         <h1 className="form-heading">Delete Product</h1>
         <p className="warning">Are you sure you want to delete this product?</p>
@@ -39,7 +39,7 @@ const DeleteProduct = ({ product }) => {
           </button>
         </div>
       </div>
-    </main>
+    </>
   );
 };
 

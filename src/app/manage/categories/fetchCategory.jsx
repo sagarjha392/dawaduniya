@@ -36,8 +36,11 @@ const CategoryListing = () => {
 
   return (
     <div className='table-container'>
-      {editingCategory ? (
-        <EditCategory category={editingCategory} />
+      {editingCategory || deletingCategory ? (
+        <>
+          {editingCategory && <EditCategory category={editingCategory} />}
+          {deletingCategory && <DeleteCategory category={deletingCategory} />}
+        </>
       ) : (
         <>
           <h1>Categories</h1>
@@ -67,8 +70,6 @@ const CategoryListing = () => {
           </table>
         </>
       )}
-
-      {deletingCategory && <DeleteCategory category={deletingCategory} />}
     </div>
   );
 };

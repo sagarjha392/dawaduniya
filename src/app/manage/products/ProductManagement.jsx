@@ -43,51 +43,65 @@ const ProductManagementPage = () => {
   };
 
   return (
-    <main>
+    <div>
       {/* Add a section to manage products */}
+        {(editingProduct === null && deletingProduct === null) && ( // Only render the table if editingProduct is null
       <div className="table-container">
-        <h1>Product Management</h1>
-        {/* Display the list of existing products in a table */}
-        <table>
-          <thead>
-            <tr>
-              <th>Brand Name</th>
-              <th>Product Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>{product.brandName}</td>
-                <td>{product.productName}</td>
-                <td>{product.category}</td>
-                <td>${product.productPrice}</td>
-                <td>{product.productQuantity}</td>
-                <td>
-                  <button id="edit"className="btn" onClick={() => handleEditProduct(product)}>
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  <button id="del" className="btn" onClick={() => handleDeleteProduct(product)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          <>
+            <h1>Product Management</h1>
+            {/* Display the list of existing products in a table */}
+            <table>
+              <thead>
+                <tr>
+                  <th>Brand Name</th>
+                  <th>Product Name</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product) => (
+                  <tr key={product.id}>
+                    <td>{product.brandName}</td>
+                    <td>{product.productName}</td>
+                    <td>{product.productDescription}</td>
+                    <td>{product.category}</td>
+                    <td>${product.productPrice}</td>
+                    <td>{product.productQuantity}</td>
+                    <td>
+                      <button
+                        id="edit"
+                        className="btn"
+                        onClick={() => handleEditProduct(product)}
+                      >
+                        Edit
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        id="del"
+                        className="btn"
+                        onClick={() => handleDeleteProduct(product)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
       </div>
+        )}
 
       {/* Render EditProduct and DeleteProduct components */}
       {editingProduct && <EditProduct product={editingProduct} />}
       {deletingProduct && <DeleteProduct product={deletingProduct} />}
-    </main>
+    </div>
   );
 };
 
