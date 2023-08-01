@@ -10,7 +10,7 @@ const EditProduct = ({ product }) => {
   const [productPrice, setProductPrice] = useState(String(product.productPrice));
   const [productQuantity, setProductQuantity] = useState(String(product.productQuantity));
   const [selectedCategory, setSelectedCategory] = useState(product.category);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([product.categories]);
 
   // Fetch categories from Firestore
   useEffect(() => {
@@ -162,7 +162,7 @@ const EditProduct = ({ product }) => {
             </select>
           </div>
           <div>
-            <button type="submit">Save Changes</button>
+            <button className="btn"type="submit">Save Changes</button>
           </div>
         </form>
       </div>
