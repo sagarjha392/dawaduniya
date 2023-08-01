@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
 import { showToast } from "@/app/components/toastcomponent";
@@ -10,6 +10,32 @@ const EditProduct = ({ product }) => {
   const [productPrice, setProductPrice] = useState(String(product.productPrice));
   const [productQuantity, setProductQuantity] = useState(String(product.productQuantity));
   const [selectedCategory, setSelectedCategory] = useState(product.category);
+  const [categories, setCategories] = useState([]);
+
+  // Fetch categories from Firestore
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const categoriesCollectionRef = collection(db, "categories");
+        const querySnapshot = await getDocs(categoriesCollectionRef);
+
+        const categoriesData = [];
+        querySnapshot.forEach((doc) => {
+          const category = { id: doc.id, ...doc.data() };
+          if (category.categoryType === "product") {
+            categoriesData.push(category);
+          }
+        });
+
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        // Handle the error if needed
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleBrandNameChange = (e) => {
     setBrandName(e.target.value);
@@ -129,10 +155,10 @@ const EditProduct = ({ product }) => {
             >
               <option value="">Select a category</option>
               {categories.map((category) => (
-              <option  key={category.id} className="options" value={category.categoryName}>
-                {category.categoryName}{" "}
-              </option>
-            ))}
+                <option key={category.id} value={category.categoryName}>
+                  {category.categoryName}
+                </option>
+              ))}
             </select>
           </div>
           <div>
