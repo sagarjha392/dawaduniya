@@ -128,10 +128,11 @@ const EditProduct = ({ product }) => {
               onChange={handleCategoryChange}
             >
               <option value="">Select a category</option>
-              {/* Replace with the list of available categories */}
-              <option value="category1">Category 1</option>
-              <option value="category2">Category 2</option>
-              {/* Add more categories as needed */}
+              {categories.map((category) => (
+              <option  key={category.id} className="options" value={category.categoryName}>
+                {category.categoryName}{" "}
+              </option>
+            ))}
             </select>
           </div>
           <div>
