@@ -117,7 +117,7 @@ const EditProduct = ({ product }) => {
             <label htmlFor="description">Description:</label>
             <textarea
             rows={6}
-              name="description"
+              name="productDescription"
               value={editedProduct.productDescription}
               onChange={handleChange}
             />
