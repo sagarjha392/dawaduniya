@@ -45,11 +45,14 @@ const ProductManagementPage = () => {
   return (
     <div>
       {/* Add a section to manage products */}
-        {(editingProduct === null && deletingProduct === null) && ( // Only render the table if editingProduct is null
+        {
+        editingProduct || deletingProduct ?(<>
+          {editingProduct &&<EditProduct product={editingProduct}/>}
+          {deletingProduct && <DeleteProduct product={deletingProduct}/>}
+        </>): ( 
       <div className="table-container">
           <>
             <h1>Product Management</h1>
-            {/* Display the list of existing products in a table */}
             <table>
               <thead>
                 <tr>
@@ -97,10 +100,6 @@ const ProductManagementPage = () => {
           </>
       </div>
         )}
-
-      {/* Render EditProduct and DeleteProduct components */}
-      {editingProduct && <EditProduct product={editingProduct} />}
-      {deletingProduct && <DeleteProduct product={deletingProduct} />}
     </div>
   );
 };

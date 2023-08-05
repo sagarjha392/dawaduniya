@@ -32,6 +32,7 @@ const EditCategory = ({ category }) => {
     try {
       await updateDoc(doc(db, 'categories', category.id), updatedCategory);
       showToast('Category updated successfully', {type:'success'});
+      window.location.reload();
     } catch (error) {
       showToast('Category not updated', {type: 'failed'});
     }

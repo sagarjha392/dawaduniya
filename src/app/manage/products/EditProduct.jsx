@@ -82,6 +82,7 @@ const EditProduct = ({ product }) => {
       await updateDoc(doc(db, "Products", product.id), updatedProduct);
       showToast("Product is updated successfully", { type: "success" });
       console.log("Successfully updated");
+      window.location.reload();
     } catch (error) {
       showToast("Product not updated", { type: "failed" });
       console.log("Failed to update Product",error);
