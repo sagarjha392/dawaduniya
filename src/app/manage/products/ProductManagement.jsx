@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
-import AddProductPage from "./addproducts/addproduct";
 import EditProduct from "./EditProduct";
 import DeleteProduct from "./DeleteProduct";
 
@@ -45,12 +44,13 @@ const ProductManagementPage = () => {
   return (
     <div>
       {/* Add a section to manage products */}
-        {
-        editingProduct || deletingProduct ?(<>
-          {editingProduct &&<EditProduct product={editingProduct}/>}
-          {deletingProduct && <DeleteProduct product={deletingProduct}/>}
-        </>): ( 
-      <div className="table-container">
+      {editingProduct || deletingProduct ? (
+        <>
+          {editingProduct && <EditProduct product={editingProduct} />}
+          {deletingProduct && <DeleteProduct product={deletingProduct} />}
+        </>
+      ) : (
+        <div className="table-container">
           <>
             <h1>Product Management</h1>
             <table>
@@ -73,8 +73,8 @@ const ProductManagementPage = () => {
                     <td>{product.productName}</td>
                     <td>{product.productDescription}</td>
                     <td>{product.category}</td>
-                    <td>${product.productPrice}</td>
-                    <td>{product.productQuantity}</td>
+                    <td>&#8377;{product.productPrice}</td>
+                    <td>{product.productQuantity}</td>git
                     <td>
                       <button
                         id="edit"
@@ -98,8 +98,8 @@ const ProductManagementPage = () => {
               </tbody>
             </table>
           </>
-      </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };

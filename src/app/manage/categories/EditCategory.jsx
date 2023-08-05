@@ -1,9 +1,9 @@
 // src/components/EditCategory.js
 "use client";
-import { useState } from 'react';
-import { collection, doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/firebase/firebase';
-import { showToast } from '@/app/components/toastcomponent';
+import { useState } from "react";
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebase";
+import { showToast } from "@/app/components/toastcomponent";
 
 const EditCategory = ({ category }) => {
   const [categoryName, setCategoryName] = useState(category.categoryName);
@@ -19,7 +19,7 @@ const EditCategory = ({ category }) => {
 
   const handleEditCategory = async () => {
     if (!categoryName) {
-      showToast('Fill all required fields', {type: 'failed'});
+      showToast("Fill all required fields", { type: "failed" });
       return;
     }
 
@@ -30,16 +30,15 @@ const EditCategory = ({ category }) => {
     };
 
     try {
-      await updateDoc(doc(db, 'categories', category.id), updatedCategory);
-      showToast('Category updated successfully', {type:'success'});
-      window.location.reload();
+      await updateDoc(doc(db, "categories", category.id), updatedCategory);
+      showToast("Category updated successfully", { type: "success" });
     } catch (error) {
-      showToast('Category not updated', {type: 'failed'});
+      showToast("Category not updated " + error, { type: "failed" });
     }
   };
 
   return (
-    <div className='form-container'>
+    <div className="form-container">
       <h1>Edit Category</h1>
       <form onSubmit={handleEditCategory}>
         <div>
@@ -58,11 +57,19 @@ const EditCategory = ({ category }) => {
             value={categoryType}
             onChange={handleCategoryTypeChange}
           >
-            <option className='options' value="product">Product</option>
-            <option className='options' value="service">Service</option>
+            <option className="options" value="product">
+              Product
+            </option>
+            <option className="options" value="service">
+              Service
+            </option>
           </select>
         </div>
-        <div><button className='btn' type="submit">Save Changes</button></div>
+        <div>
+          <button className="btn" type="submit">
+            Save Changes
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -1,10 +1,10 @@
 // src/components/CategoryListing.js
-"use client"
-import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/firebase/firebase';
-import EditCategory from './EditCategory';
-import DeleteCategory from './DeleteCategory';
+"use client";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/firebase/firebase";
+import EditCategory from "./EditCategory";
+import DeleteCategory from "./DeleteCategory";
 
 const CategoryListing = () => {
   const [categories, setCategories] = useState([]);
@@ -13,7 +13,7 @@ const CategoryListing = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'categories'));
+      const querySnapshot = await getDocs(collection(db, "categories"));
       const categoryList = [];
       querySnapshot.forEach((doc) => {
         categoryList.push({ ...doc.data(), id: doc.id });
@@ -35,7 +35,7 @@ const CategoryListing = () => {
   };
 
   return (
-    <div className='table-container'>
+    <div className="table-container">
       {editingCategory || deletingCategory ? (
         <>
           {editingCategory && <EditCategory category={editingCategory} />}
@@ -59,10 +59,22 @@ const CategoryListing = () => {
                   <td>{category.categoryName}</td>
                   <td>{category.categoryType}</td>
                   <td>
-                    <button id="edit" className='btn' onClick={() => handleEditCategory(category)}>Edit</button>
+                    <button
+                      id="edit"
+                      className="btn"
+                      onClick={() => handleEditCategory(category)}
+                    >
+                      Edit
+                    </button>
                   </td>
                   <td>
-                    <button id="del" className='btn' onClick={() => handleDeleteCategory(category)}>Delete</button>
+                    <button
+                      id="del"
+                      className="btn"
+                      onClick={() => handleDeleteCategory(category)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
