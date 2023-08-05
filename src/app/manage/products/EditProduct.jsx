@@ -9,8 +9,12 @@ const EditProduct = ({ product }) => {
   const [productName, setProductName] = useState(product.productName);
   const [category, setCategory] = useState(product.category);
   const [productPrice, setProductPrice] = useState(product.productPrice);
-  const [productQuantity, setProductQuantity] = useState(product.productQuantity);
-  const [productDescription, setProductDescription] = useState(product.productDescription);
+  const [productQuantity, setProductQuantity] = useState(
+    product.productQuantity
+  );
+  const [productDescription, setProductDescription] = useState(
+    product.productDescription
+  );
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -19,7 +23,7 @@ const EditProduct = ({ product }) => {
         const categoriesCollectionRef = collection(db, "categories");
         const querySnapshot = await getDocs(categoriesCollectionRef);
 
-      const categoriesData = querySnapshot.docs.map((doc) => ({
+        const categoriesData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
@@ -54,26 +58,33 @@ const EditProduct = ({ product }) => {
     setProductDescription(event.target.value);
   };
 
- const handleEditProduct = async()=>{
-  if(!brandName||!category||!productName||!productPrice || !productQuantity ||!productDescription){
-    showToast('Fill all required fields', {type: 'failed'});
+  const handleEditProduct = async () => {
+    if (
+      !brandName ||
+      !category ||
+      !productName ||
+      !productPrice ||
+      !productQuantity ||
+      !productDescription
+    ) {
+      showToast("Fill all required fields", { type: "failed" });
       return;
-  }
-  const updatedProduct={
-    brandName,
-    productName,
-    category,
-    productPrice,
-    productQuantity,
-    productDescription
-  }
-  try {
-    await updateDoc(doc(db, 'Products', product.id), updatedProduct);
-      showToast('Product is updated successfully',{type:'success'});
-  } catch (error) {
-    showToast('Product not updated', {type: 'failed'});
-  }
- }
+    }
+    const updatedProduct = {
+      brandName,
+      productName,
+      category,
+      productPrice,
+      productQuantity,
+      productDescription,
+    };
+    try {
+      await updateDoc(doc(db, "Products", product.id), updatedProduct);
+      showToast("Product is updated successfully", { type: "success" });
+    } catch (error) {
+      showToast("Product not updated", { type: "failed" });
+    }
+  };
 
   return (
     <main>
@@ -135,7 +146,7 @@ const EditProduct = ({ product }) => {
           <div>
             <label htmlFor="productDescription">Description:</label>
             <textarea
-            rows={6}
+              rows={6}
               name="productDescription"
               value={productDescription}
               onChange={handleProductDescriptionChange}
