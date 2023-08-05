@@ -5,15 +5,12 @@ import { db } from "@/firebase/firebase";
 import { showToast } from "@/app/components/toastcomponent";
 
 const EditProduct = ({ product }) => {
-  const [editedProduct, setEditedProduct] = useState({
-    brandName: product.brandName,
-    productName: product.productName,
-    category: product.category,
-    productPrice: product.productPrice,
-    productQuantity: product.productQuantity,
-    productDescription: product.productDescription,
-  });
-
+  const [brandName, setBrandName] = useState(product.brandName);
+  const [productName, setProductName] = useState(product.productName);
+  const [category, setCategory] = useState(product.category);
+  const [productPrice, setProductPrice] = useState(product.productPrice);
+  const [productQuantity, setProductQuantity] = useState(product.productQuantity);
+  const [productDescription, setProductDescription] = useState(product.productDescription);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -36,40 +33,61 @@ const EditProduct = ({ product }) => {
     fetchCategories();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: value,
-    }));
+  const handleBrandNameChange = (event) => {
+    setBrandName(event.target.value);
+  };
+  const handleProductNameChange = (event) => {
+    setProductName(event.target.value);
+  };
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+  const handleProductPriceChange = (event) => {
+    setProductPrice(event.target.value);
   };
 
-  const handleUpdateProduct = async () => {
-    try {
-      // Update the product in the 'Products' collection in Firestore
-      await updateDoc(doc(db, "Products", product.id), editedProduct);
-
-      showToast("Product updated successfully", { type: "success" });
-      console.log("Product updated successfully");
-    } catch (error) {
-      console.error("Error updating product:", error);
-      showToast("Error updating product", { type: "failed" });
-    }
+  const handleProductQuantityChange = (event) => {
+    setProductQuantity(event.target.value);
   };
+
+  const handleProductDescriptionChange = (event) => {
+    setProductDescription(event.target.value);
+  };
+
+ const handleEditProduct = async()=>{
+  if(!brandName||!category||!productName||!productPrice || !productQuantity ||!productDescription){
+    showToast('Fill all required fields', {type: 'failed'});
+      return;
+  }
+  const updatedProduct={
+    brandName,
+    productName,
+    category,
+    productPrice,
+    productQuantity,
+    productDescription
+  }
+  try {
+    await updateDoc(doc(db, 'Products', product.id), updatedProduct);
+      showToast('Product is updated successfully',{type:'success'});
+  } catch (error) {
+    showToast('Product not updated', {type: 'failed'});
+  }
+ }
 
   return (
     <main>
       <div className="form-container">
         <h1 className="form-heading">Edit Product</h1>
         <hr />
-        <form>
+        <form onSubmit={handleEditProduct}>
           <div>
             <label htmlFor="brandName">Brand Name:</label>
             <input
               type="text"
               name="brandName"
-              value={editedProduct.brandName}
-              onChange={handleChange}
+              value={brandName}
+              onChange={handleBrandNameChange}
             />
           </div>
           <div>
@@ -77,16 +95,16 @@ const EditProduct = ({ product }) => {
             <input
               type="text"
               name="productName"
-              value={editedProduct.productName}
-              onChange={handleChange}
+              value={productName}
+              onChange={handleProductNameChange}
             />
           </div>
           <div>
             <label htmlFor="category">Category:</label>
             <select
               name="category"
-              value={editedProduct.category} // Make sure to set the correct value
-              onChange={handleChange}
+              value={category} // Make sure to set the correct value
+              onChange={handleCategoryChange}
             >
               <option value="">Select a category</option>
               {categories.map((category) => (
@@ -101,8 +119,8 @@ const EditProduct = ({ product }) => {
             <input
               type="number"
               name="productPrice"
-              value={editedProduct.productPrice}
-              onChange={handleChange}
+              value={productPrice}
+              onChange={handleProductPriceChange}
             />
           </div>
           <div>
@@ -110,22 +128,22 @@ const EditProduct = ({ product }) => {
             <input
               type="number"
               name="productQuantity"
-              value={editedProduct.productQuantity}
-              onChange={handleChange}
+              value={productQuantity}
+              onChange={handleProductQuantityChange}
             />
           </div>
           <div>
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="productDescription">Description:</label>
             <textarea
             rows={6}
               name="productDescription"
-              value={editedProduct.productDescription}
-              onChange={handleChange}
+              value={productDescription}
+              onChange={handleProductDescriptionChange}
             />
           </div>
           <div>
-            <button className="btn" onClick={handleUpdateProduct}>
-              Update Product
+            <button className="btn" type="submit">
+              Update Products
             </button>
           </div>
         </form>

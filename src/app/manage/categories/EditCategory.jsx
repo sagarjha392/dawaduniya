@@ -19,7 +19,7 @@ const EditCategory = ({ category }) => {
 
   const handleEditCategory = async () => {
     if (!categoryName) {
-      showToast('Fill all required fields', 'failed');
+      showToast('Fill all required fields', {type: 'failed'});
       return;
     }
 
@@ -31,9 +31,9 @@ const EditCategory = ({ category }) => {
 
     try {
       await updateDoc(doc(db, 'categories', category.id), updatedCategory);
-      showToast('Category updated successfully', 'success');
+      showToast('Category updated successfully', {type:'success'});
     } catch (error) {
-      showToast('Category not updated', 'failed');
+      showToast('Category not updated', {type: 'failed'});
     }
   };
 
